@@ -28,7 +28,7 @@ get "/" do
     puts "params: #{params}"
 
     @rotations = rotations_table.all.to_a
-    pp @rotations
+   pp @rotations
 
     view "rotations"
 end
@@ -40,10 +40,9 @@ get "/rotations/:id" do
     @users_table = users_table
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
     pp @rotation
+    # @comment = comments_table.where(rotation_id: @rotations[:id]).to_a
 
-    @comment = comments_table.where(event_id: @event[:id]).to_a
-
-    view "event"
+    view "rotation"
 end
 
 # display the comment form (aka "new")
@@ -58,7 +57,7 @@ end
 post "/rotations/:id/comment/create" do
     puts "params: #{params}"
 
-    # first find the event that rsvp'ing for
+    # first find the rotation that you are adding a comment for for
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
     # next we want to insert a row in the rsvps table with the rsvp form data
     comments_table.insert(
@@ -66,7 +65,6 @@ post "/rotations/:id/comment/create" do
         user_id: session["user_id"],
         comments: params["comment_detail"],
     )
-
     redirect "/rotations/#{@rotation[:id]}"
 end
 

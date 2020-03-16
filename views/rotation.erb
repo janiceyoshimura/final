@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-sm-9">
+        <h1>
+            <%= @rotation[:company] %>
+        </h1>
+        <h5><%= @rotation[:address] %></h5>
+            <br>
+        <h2><%= @rotation[:function] %></h2>
+        <p><%= @rotation[:function_description] %></p>
+            <br>
+        <h4>Length: <%= @rotation[:length] %></h4>
+            <br>
+        <a href="/rotations/:id/comment/new" class="btn btn-secondary">Add a comment</a>
+        <a href="/" class="btn btn-secondary">Mark Interest</a>
+    </div>
+
+       
+    <div class="col-sm-3">
+        <!-- insert a picture here of the map  -->
+        <h3>What others are saying</h3>
+        <p><%= @rotation[:company] %></p>
+    </div>
+</div>
+<br>
+

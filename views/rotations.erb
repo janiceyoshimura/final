@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <h2>All Rotations</h2>
+    </div>
+<br>
+
+  <div class="row">
+    <div class="col-sm-3">
+        <div class="row">
+            <p>Hi INSERT USER FIRST NAME!</p>
+            <br>
+            <p>Check out the available rotations. You can mark interest in any you see and also write comments for yourself!</p>
+        </div>
+        <br>
+        <div class="row">
+        <p><strong>My interested Rotations</strong></p>
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <% for rotation in @rotations %>
+            <div class="container outline">
+                <p><strong><a href="/rotations/<%= rotation[:id] %>"><%= rotation[:company] %></a></strong>
+                , <%= rotation[:function] %> </p>
+                <p><u><%= rotation[:city] %></u></p>
+                <p><%= rotation[:length] %></p>
+            </div>
+            <br>
+        <% end %>
+    </div>
+  </div>
+</div>
+
