@@ -18,7 +18,7 @@
             <% if @current_user %>
                 <a href="/rotations/<%= @rotation[:id] %>/interest/new" class="btn btn-primary">Mark Interest</a>
             <% else %>
-                <a href="/logins/new" class="btn btn-danger">Please sign in to RSVP</a>
+                <a href="/logins/new" class="btn btn-dark">Please sign in to mark interest</a>
             <% end %>
         </p>
 
@@ -27,17 +27,16 @@
        
     <div class="col-sm-3">
         <!-- insert a picture here of the map  -->
-        <h3>this needs to be updated</h3>
-        <p><%= @rotation[:company] %></p>
+        <h3>Current Status</h3>
         <% for interest in @interests %>
-                <% if interest[:follow_up]==nil %>
+                <% if interest[:mark_interested]==true && interest[:company]==@rotation[:company] %>
                         <!-- Want to show the rotation where the rotation id ==  -->
-                        <%= interest[:interested] %>
-                        <%= interest[:follow_up] %>
+                        <p> You have marked interest in a rotation at <%= @rotation[:company] %></p>
+                        <p> Someone from our team will follow up with you shortly! </p>
                     <% else %>
-                <% end %>
+                        <p>  </p>
+                <% end %>  
          <% end %>
-       
     </div>
 </div>
 <br>

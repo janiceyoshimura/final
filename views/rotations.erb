@@ -15,24 +15,40 @@
   <div class="row">
     <div class="col-sm-3">
         <div class="row">
-            <p>Hi <%= @current_user[:first_name] %>!</p>
+            <% if @current_user %>
+                <h5>Hi <%= @current_user[:first_name] %>!</h5>
             <br>
             <p>Check out the available rotations. You can mark interest in any you see and someone from our team would be happy to follow up!</p>
         </div>
         <br>
         <div class="row">
-        <p><strong>My Interested Rotations</strong></p>
+            <p><strong>My Interested Rotations</strong></p>
         </div>
         <div class="row">
-         <% for interest in @interests %>
-                <% if interest[:follow_up]==nil %>
-                        <!-- Want to show the rotation where the rotation id ==  -->
-                        <%= interest[:rotation_id] %>
+            <% for @interest in @interests %>
+                <% if @interest[:mark_interested]==true  %>
+                    <div class="row interest">
+                        <p> <strong><%= @interest[:company] %></strong>: <%= @interest[:function] %></p> 
+                        <% if @interest[:follow_up] == true %>
+                        <p>Someone from our team is following up! </p>
+                        <% else %>
+                        <p>For your info only; no one is following up </p>
+                        <% end %> 
+                    </div>
+                    <br>
                     <% else %>
-                <% end %>
-         <% end %>
+                <% end %>  
+             <% end %>
         </div>
+
+        <%else%>
+            <p> Please <a href="/logins/new">login </a> to submit interest in any rotations </p>
+        <%end%>
     </div>
+
+            <br>
+
+
 
     <div class="col-sm-9">
         <% for rotation in @rotations %>

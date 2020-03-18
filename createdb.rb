@@ -28,7 +28,10 @@ DB.create_table! :interests do
   foreign_key :user_id
   foreign_key :rotation_id
   String :interested
+  String :company
+  String :function
   Boolean :follow_up
+  Boolean :mark_interested
 end
 
 DB.create_table! :users do

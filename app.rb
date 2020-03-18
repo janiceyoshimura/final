@@ -36,12 +36,20 @@ get "/" do
     puts "params: #{params}"
 
     @rotations = rotations_table.all.to_a
-    pp @rotations
     @interests = interests_table.where(user_id: session["user_id"]).to_a
-    pp @interests
+    # pp @interests
 
     # this stuff is broken - need to show the join of the rotations table and the interests table
-    # interest = @interests[:interested] == 1
+    # interest = @interests[:mark_interested] == 1
+
+    for @interest in @interests
+        if @interest[:mark_interested]==true 
+            pp @interest[:company]
+        else
+
+        end
+    end
+   
     # @interested_rotations = rotations_table.where(id: interest[:rotation_id])
 
     view "rotations"
@@ -77,7 +85,11 @@ post "/rotations/:id/interests/create" do
     interests_table.insert(
         rotation_id: @rotation[:id],
         user_id: session["user_id"],
-        interested: 1,
+        mark_interested: 1,
+        follow_up: params["follow_up"],
+        interested: params["interested"],
+        company: params["company"],
+        function: params["function"],
     )
     redirect "/rotations/#{@rotation[:id]}"
 end
