@@ -5,6 +5,10 @@ gem 'sinatra-contrib'
 gem 'sequel'
 gem 'twilio-ruby'
 gem 'bcrypt'
+gem 'forecast_io'
+gem 'geocoder'
+gem 'httparty'
+gem 'puma'
 
 group :development do
   gem 'sqlite3'

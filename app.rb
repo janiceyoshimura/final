@@ -13,6 +13,14 @@ use Rack::Session::Cookie, key: 'rack.session', path: '/', secret: 'secret'     
 before { puts; puts "--------------- NEW REQUEST ---------------"; puts }             #
 after { puts; }                                                                       #
 #######################################################################################
+require "geocoder"
+require "rubygems"
+
+
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_AUTH_TOKEN"]
+
+client = Twilio::REST::Client.new(account_sid, auth_token)
 
 rotations_table = DB.from(:rotations)
 interests_table = DB.from(:interests)
@@ -28,7 +36,13 @@ get "/" do
     puts "params: #{params}"
 
     @rotations = rotations_table.all.to_a
-   pp @rotations
+    pp @rotations
+    @interests = interests_table.where(user_id: session["user_id"]).to_a
+    pp @interests
+
+    # this stuff is broken - need to show the join of the rotations table and the interests table
+    # interest = @interests[:interested] == 1
+    # @interested_rotations = rotations_table.where(id: interest[:rotation_id])
 
     view "rotations"
 end
@@ -40,30 +54,30 @@ get "/rotations/:id" do
     @users_table = users_table
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
     pp @rotation
-    # @comment = comments_table.where(rotation_id: @rotations[:id]).to_a
-
+    @interests = interests_table.where(user_id: session["user_id"]).to_a
+   
     view "rotation"
 end
 
-# display the comment form (aka "new")
-get "/rotations/:id/comment/new" do
+# display the interest form (aka "new")
+get "/rotations/:id/interest/new" do
     puts "params: #{params}"
 
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
-    view "new_comment"
+    view "new_interest"
 end
 
-# receive the submitted comment form (aka "create")
-post "/rotations/:id/comment/create" do
+# receive the submitted interest (aka "create")
+post "/rotations/:id/interests/create" do
     puts "params: #{params}"
 
-    # first find the rotation that you are adding a comment for for
+    # first find the rotation that you are adding an interest for
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
-    # next we want to insert a row in the rsvps table with the rsvp form data
-    comments_table.insert(
+    # next we want to insert a row in the interests table with the interest form data
+    interests_table.insert(
         rotation_id: @rotation[:id],
         user_id: session["user_id"],
-        comments: params["comment_detail"],
+        interested: 1,
     )
     redirect "/rotations/#{@rotation[:id]}"
 end
@@ -86,7 +100,17 @@ post "/users/create" do
             first_name: params["first_name"],
             last_name: params["last_name"],
             email: params["email"],
+            phone: params["phone"],
             password: BCrypt::Password.create(params["password"])
+        )
+
+        from = '+12244123472'
+        to = params["phone"]
+
+        client.messages.create(
+        from: from,
+        to: to,
+        body: "Welcome to Rotations.io! Use the same email and password to login and start checking out rotations"
         )
 
         redirect "/logins/new"
@@ -125,3 +149,6 @@ get "/logout" do
     session["user_id"] = nil
     redirect "/logins/new"
 end
+
+
+

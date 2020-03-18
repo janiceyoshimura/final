@@ -14,18 +14,21 @@ DB.create_table! :rotations do
   String :function_description
   String :length
 end
-DB.create_table! :comments do
-  primary_key :id
-  foreign_key :rotation_id
-  String :first_name
-  String :email
-  String :comment_detail, text: true
-end
+
+# DB.create_table! :comments do
+#   primary_key :id
+#   foreign_key :rotation_id
+#   String :first_name
+#   String :email
+#   String :comment_detail, text: true
+# end
 
 DB.create_table! :interests do
   primary_key :id
   foreign_key :user_id
-  Boolean :interested
+  foreign_key :rotation_id
+  String :interested
+  Boolean :follow_up
 end
 
 DB.create_table! :users do
@@ -33,6 +36,7 @@ DB.create_table! :users do
   String :first_name
   String :last_name
   String :email
+  Integer :phone
   String :password
 end
 

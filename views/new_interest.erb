@@ -1,0 +1,20 @@
+<h2>Submit interest for <%= @rotation[:function] %> at <%= @rotation[:company] %></h2>
+
+<br>
+<form action="/rotations/<%= @rotation[:id] %>/interests/create" method="post">
+  <div class="form-group">
+    <label>How interested are you?</label>
+    <select class="form-control" name="interested">
+      <option value="1">Extremely interested - I'm ready to start ASAP!</option>
+      <option value="2">Very Interested - This is near the top of my list, but I still need a few more details</option>
+      <option value="3">In consideration - I'm interested but am still considering many other things</option>
+      <option value="4">Initial stages - I just started exploring options </option>
+    
+    </select><label>Would you like one of our team members to follow up with more details?</label>
+    <select class="form-control" name="follow_up">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </select>
+  </div>
+
+   <button type="submit" class="btn btn-primary">Submit</button>

@@ -9,17 +9,38 @@
         <p><%= @rotation[:function_description] %></p>
             <br>
         <h4>Length: <%= @rotation[:length] %></h4>
-            <br>
+            <!-- <br>
         <a href="/rotations/:id/comment/new" class="btn btn-secondary">Add a comment</a>
         <a href="/" class="btn btn-secondary">Mark Interest</a>
+        <br> -->
+
+        <p class="mt-5">
+            <% if @current_user %>
+                <a href="/rotations/<%= @rotation[:id] %>/interest/new" class="btn btn-primary">Mark Interest</a>
+            <% else %>
+                <a href="/logins/new" class="btn btn-danger">Please sign in to RSVP</a>
+            <% end %>
+        </p>
+
     </div>
 
        
     <div class="col-sm-3">
         <!-- insert a picture here of the map  -->
-        <h3>What others are saying</h3>
+        <h3>this needs to be updated</h3>
         <p><%= @rotation[:company] %></p>
+        <% for interest in @interests %>
+                <% if interest[:follow_up]==nil %>
+                        <!-- Want to show the rotation where the rotation id ==  -->
+                        <%= interest[:interested] %>
+                        <%= interest[:follow_up] %>
+                    <% else %>
+                <% end %>
+         <% end %>
+       
     </div>
 </div>
 <br>
+
+
 
