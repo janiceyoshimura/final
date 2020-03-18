@@ -15,6 +15,8 @@ after { puts; }                                                                 
 #######################################################################################
 require "geocoder"
 require "rubygems"
+require "httparty"
+require "open-uri"
 
 
 account_sid = ENV["TWILIO_ACCOUNT_SID"]
@@ -61,8 +63,12 @@ get "/rotations/:id" do
 
     @users_table = users_table
     @rotation = rotations_table.where(id: params[:id]).to_a[0]
-    pp @rotation
     @interests = interests_table.where(user_id: session["user_id"]).to_a
+
+       @results = Geocoder.search(@rotation[:address])
+           @lat_long = @results.first.coordinates # => [lat, long]
+           pp @lat_long[0]
+           pp @lat_long[-1]
    
     view "rotation"
 end

@@ -13,7 +13,7 @@
 <br>
 
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <div class="row">
             <% if @current_user %>
                 <h5>Hi <%= @current_user[:first_name] %>!</h5>
@@ -27,12 +27,12 @@
         <div class="row">
             <% for @interest in @interests %>
                 <% if @interest[:mark_interested]==true  %>
-                    <div class="row interest">
+                    <div class="container interest">
                         <p> <strong><%= @interest[:company] %></strong>: <%= @interest[:function] %></p> 
                         <% if @interest[:follow_up] == true %>
                         <p>Someone from our team is following up! </p>
                         <% else %>
-                        <p>For your info only; no one is following up </p>
+                        <p>For your info only, no one is following up </p>
                         <% end %> 
                     </div>
                     <br>
@@ -50,7 +50,7 @@
 
 
 
-    <div class="col-sm-9">
+    <div class="col-sm-8">
         <% for rotation in @rotations %>
             <div class="container outline">
                 <p><strong><a href="/rotations/<%= rotation[:id] %>"><%= rotation[:company] %></a></strong>

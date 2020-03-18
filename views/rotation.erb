@@ -26,11 +26,19 @@
 
        
     <div class="col-sm-3">
-        <!-- insert a picture here of the map  -->
-        <h3>Current Status</h3>
+        <!-- picture of the map  -->
+            <iframe
+                width="220"
+                height="180"
+                frameborder="1" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
+                &q=<%= @lat_long[0] %>,<%= @lat_long[-1] %>&zoom=11" allowfullscreen>
+            </iframe>
+         <!-- End map code  -->
+
         <% for interest in @interests %>
                 <% if interest[:mark_interested]==true && interest[:company]==@rotation[:company] %>
-                        <!-- Want to show the rotation where the rotation id ==  -->
+                        <h3>Current Status</h3>
                         <p> You have marked interest in a rotation at <%= @rotation[:company] %></p>
                         <p> Someone from our team will follow up with you shortly! </p>
                     <% else %>
